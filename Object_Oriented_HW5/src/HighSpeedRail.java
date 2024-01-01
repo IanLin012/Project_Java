@@ -6,7 +6,7 @@ public class HighSpeedRail extends Railway { // extend Railway
     public int getTicket() { // ticket accessor
         return ticket;
     }
-    public HighSpeedRail(String conductorName, int passenger, int ticket) { // initial constructor
+    HighSpeedRail(String conductorName, int passenger, int ticket) { // initial constructor
         super(conductorName, passenger);
         conductorName = getConductorName();
         passenger = getPassenger();

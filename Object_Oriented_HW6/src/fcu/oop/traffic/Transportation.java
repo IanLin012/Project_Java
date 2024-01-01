@@ -9,7 +9,7 @@ public class Transportation {
     public double getPrice() { // price accessor
         return price;
     }
-    public Transportation(String driver, double price) { // initial constructor
+    Transportation(String driver, double price) { // initial constructor
         this.driver = driver;
         this.price = price;
     }

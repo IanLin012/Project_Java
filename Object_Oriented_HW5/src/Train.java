@@ -6,7 +6,7 @@ public class Train extends Railway { // extend Railway
     public double getFare() { // fare accessor
         return fare;
     }
-    public Train(String conductorName, int passenger, double fare) { // initial constructor
+    Train(String conductorName, int passenger, double fare) { // initial constructor
         super(conductorName, passenger);
         conductorName = getConductorName();
         passenger = getPassenger();

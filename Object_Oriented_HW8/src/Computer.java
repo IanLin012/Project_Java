@@ -6,7 +6,7 @@ public class Computer extends ThreeCProduct {
     public String getUserName() { // userName accessor
         return userName;
     }
-    public Computer(String brand, String userName) { // initial constructor
+    Computer(String brand, String userName) { // initial constructor
         this.brand = brand;
         this.userName = userName;
     }

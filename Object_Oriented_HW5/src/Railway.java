@@ -13,7 +13,7 @@ public class Railway {
     public int getPassenger() { // passenger accessor
         return passenger;
     }
-    public Railway (String conductorName, int passenger) { // initial constructor
+    Railway (String conductorName, int passenger) { // initial constructor
         this.conductorName = conductorName;
         this.passenger = passenger;
     }

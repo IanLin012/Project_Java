@@ -3,7 +3,7 @@ public class MobilePhone extends ThreeCProduct {
     public String getBrand() { // brand accessor
         return brand;
     }
-    public MobilePhone(String brand) { // initial constructor
+    MobilePhone(String brand) { // initial constructor
         this.brand = brand;
     }
     @Override

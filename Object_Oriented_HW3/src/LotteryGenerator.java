@@ -3,9 +3,9 @@ import java.util.Arrays;
 public class LotteryGenerator {
     int totalNumbers; // a variable
     static int lotteryNumbers = 5; // a static variable
-    public LotteryGenerator() {}; // empty constructor
+    LotteryGenerator() {}; // empty constructor
 
-    public LotteryGenerator(int totalNumbers) {
+    LotteryGenerator(int totalNumbers) {
         this.totalNumbers = totalNumbers;
     }
 

@@ -7,17 +7,17 @@ public class Student {
     public String getName() { // name accessor
         return name;
     }
-    public int getId() { // id accessor
-        return id;
-    }
-    public HashMap<String, Integer> getGrades() { // grades accessor
-        return grades;
-    }
     public void setName(String name) { // name mutator
         this.name = name;
     }
+    public int getId() { // id accessor
+        return id;
+    }
     public void setId(int id) { // id mutator
         this.id = id;
+    }
+    public HashMap<String, Integer> getGrades() { // grades accessor
+        return grades;
     }
     public void setGrades(String subject, int grade) { // grades mutator
         this.grades.put(subject.toUpperCase(), grade);

@@ -1,6 +1,7 @@
 import java.util.Random;
 
 public class GeneralGame implements PlayGenerator, PlayGround {
+    Random random = new Random();
     private Gesture[] sysGesture = new Gesture[3]; // private variable
 
     public Gesture[] getSysGesture() { // sysGesture accessor
@@ -9,8 +10,7 @@ public class GeneralGame implements PlayGenerator, PlayGround {
 
     public Gesture generateGestureByRandom() { // implement PlayGenerator interface
         Gesture[] values = Gesture.values();
-        int len = values.length;
-        int randIdx = new Random().nextInt(len);
+        int randIdx = random.nextInt(values.length);
         return values[randIdx];
     }
 
