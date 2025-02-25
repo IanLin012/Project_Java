@@ -1,3 +1,4 @@
+/*
 // 1.1 練習1
 public class Person {
     private String name;
@@ -19,9 +20,9 @@ public class Person {
         p2.introduce();
     }
 }
+*/
 
 // 1.5 練習1
-/*
 public class Person {
     private String name;
     private int age;
@@ -47,4 +48,3 @@ public class Person {
         person2.displayInfo();
     }
 }
-*/
