@@ -1,4 +1,4 @@
-// 1.1 練習3
+// 1.1 練習3：物件vs.資料結構
 import java.util.Scanner;
 
 public class DataStructure {
