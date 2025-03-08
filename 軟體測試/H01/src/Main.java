@@ -1,3 +1,4 @@
+// 美國大聯盟季後賽排程- 防禦性程式設計
 import java.io.*;
 import java.util.*;
 import java.util.logging.*;
@@ -33,6 +34,7 @@ public class Main {
                 logger.warning("Team " + t.getTeam() + " division unclear: " + t.getDivision());
             }
         }
+
         int ALTeams = leagueMap.get("AL").size(), NLTeams = leagueMap.get("NL").size();
         if (ALTeams < 6) {
             logger.severe("AL lack of " + (6 - ALTeams) + " teams");
