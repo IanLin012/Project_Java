@@ -9,17 +9,15 @@ import java.util.logging.Logger;
  * Print AL & NL playoff schedule
  */
 public final class SchedulePrinter {
-    private static final Logger LOGGER = Logger.getLogger(SchedulePrinter.class.getName());
-    private static final int REQ_TEAMS = 6;
 
-    // 格式化字串常數
+    // Format string
     private static final String FORMAT_AL_6 = "%6s ---\n";
     private static final String FORMAT_AL_6_Q = "%6s --- ? ----\n";
     private static final String FORMAT_AL_12_Q = "%12s ---- ? ----\n";
     private static final String FORMAT_NL_6 = "%6s --- ? ---- ? ---- ? ------------\n";
     private static final String FORMAT_NL_12 = "%12s ----\n";
 
-    // 私有建構子，防止被實例化
+    // Private constructor avoid to be instanced
     private SchedulePrinter() {}
 
     /**
