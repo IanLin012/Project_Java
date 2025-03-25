@@ -1,4 +1,4 @@
-package H01_Playoff;
+package Playoff;
 
 /**
  * Team class include team name, division, wins, losss, seed number

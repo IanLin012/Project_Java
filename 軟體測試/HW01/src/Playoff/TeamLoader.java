@@ -1,4 +1,4 @@
-package H01_Playoff;
+package Playoff;
 
 import java.io.BufferedReader;
 import java.io.IOException;
