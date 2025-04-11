@@ -1,5 +1,5 @@
-/.idea
-/out
-/sw-testing24
-/Test
+.idea/
+out/
+target/
+sw-testing24/
 *.iml
