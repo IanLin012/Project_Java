@@ -1,29 +1,36 @@
 package org.example;
-import java.util.Scanner;
+
+/**
+ *isPrime的功能
+ */
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Please input a number: ");
-        int num = scanner.nextInt();
-        if(isPrime(num)) {
-            System.out.println("It is a prime");
-        } else {
-            System.out.println("It is not a prime");
-        }
+    /* default */ Main(){
+        // This constructor is intentionally empty. Nothing special is needed here.
     }
-    private static boolean isPrime(int num) {
-        if(num > 100) {
-            throw new NumberFormatException("BigNumberException");
-        } else if (num < 0) {
-            throw new NumberFormatException("SmallNumberException");
+
+    /**
+     *如果 num 大於 100 就拋出例外 BigNumberException; 小於 0 就拋出 SmallNumberException
+     */
+    public boolean isPrime(final int num) throws BigNumberException, SmallNumberException {
+        final int bigNumber = 100;
+        if (num > bigNumber) {
+            throw new BigNumberException("數值太大: " + num);
         }
-        boolean b = true;
-        for(int i=2; i<num; i++) {
-            if(num%i==0) {
-                b = false;
+        if (num < 0) {
+            throw new SmallNumberException("數值太小: " + num);
+        }
+
+        boolean bool = true;
+        final int minPrime = 2;
+        if (num < minPrime) {
+            bool = false;
+        }
+        for (int i = 2; i <= Math.sqrt(num); i++) {
+            if (num % i == 0) {
+                bool = false;
             }
         }
-        return b;
+        return bool;
     }
 }

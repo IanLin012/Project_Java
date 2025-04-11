@@ -5,33 +5,34 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>Quiz1</artifactId>
+    <artifactId>Quiz1b</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <maven.compiler.source>22</maven.compiler.source>
-        <maven.compiler.target>22</maven.compiler.target>
+        <maven.compiler.source>23</maven.compiler.source>
+        <maven.compiler.target>23</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <!-- PMD -->
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
-                <version>3.26.0</version>
+                <version>3.15.0</version>
                 <configuration>
+                    <targetJdk>17</targetJdk>
+                    <printFailingErrors>true</printFailingErrors>
                     <rulesets>
-                        <!-- 指定使用的 PMD 規則集 -->
-                        <ruleset>target/pmd/rulesets/ruleset.xml</ruleset>
+                        <ruleset>src/main/resources/ruleset.xml</ruleset>
                     </rulesets>
-                    <format>xml</format>
-                    <format>net.sourceforge.pmd.renderers.SummaryHTMLRenderer</format>
+                    <minimumPriority>3</minimumPriority>
                 </configuration>
                 <executions>
                     <execution>
+                        <phase>verify</phase>
                         <goals>
-                            <!-- 執行 PMD 的 check 工作 -->
                             <goal>check</goal>
                         </goals>
                     </execution>
@@ -40,5 +41,30 @@
         </plugins>
     </build>
 
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.15.0</version>
+                <configuration>
+                    <targetJdk>17</targetJdk>
+                    <rulesets>
+                        <ruleset>src/main/resources/pmd/ruleset.xml</ruleset>
+                    </rulesets>
+                    <minimumPriority>3</minimumPriority>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
 
+    <!-- JUnit -->
+    <dependencies>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.11.0</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 </project>
