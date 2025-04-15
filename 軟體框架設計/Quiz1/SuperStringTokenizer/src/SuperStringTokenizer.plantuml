@@ -1,0 +1,10 @@
+@startuml
+class StringTokenizer
+
+class SuperStringTokenizer {
+  + nextToken(): String
+  + getAllTokens(): String[]
+}
+
+StringTokenizer <|-- SuperStringTokenizer
+@enduml

@@ -1,0 +1,56 @@
+@startuml
+' 定義 Monster 類別
+class Monster {
+  - name: String
+  - description: String
+  - type: String
+  - hp: int
+  + Monster(name: String, description: String, type: String, hp: int, movementSpeed: int)
+  + getName(): String
+  + getHp(): int
+  + setHp(hp: int): void
+  + sleep(): void
+}
+
+' 定義 Hunter 類別
+class Hunter {
+  - name: String
+  - hp: int
+  - weapon: Weapon
+  - mount: Mount
+  + Hunter(name: String, hp: int)
+  + getHp(): int
+  + setHp(hp: int): void
+  + setWeapon(w: Weapon): void
+  + setMount(m: Mount): void
+  + fight(Monster m): void
+  + fight(Monster m, int rounds): void
+  + rest(): void
+  + getName(): String
+}
+
+' 定義 Mount 類別
+class Mount {
+  - name: String
+  - speed: int
+  - defenseModifier: int
+  + Mount(name: String, speed: int, defenseModifier: int)
+  + getName(): String
+  + getSpeed(): int
+}
+
+' 定義 Weapon 類別
+class Weapon {
+  - name: String
+  - damage: int
+  - mobilityReduction: int
+  + Weapon(name: String, damage: int, mobilityReduction: int)
+  + getName(): String
+  + getDamage(): int
+}
+
+' 類別關係
+Hunter "1" --> "1" Mount : rides
+Hunter "1" --> "1" Weapon : uses
+Monster ..> Weapon : vulnerableTo
+@enduml

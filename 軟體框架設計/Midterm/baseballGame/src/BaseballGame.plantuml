@@ -1,0 +1,80 @@
+@startuml
+'比賽資訊
+class Game {
+  - date : String
+  - teamA : Team
+  - teamB : Team
+  - innings : List<Inning>
+  - random : Random
+  + Game(date: String, teamA: Team, teamB: Team)
+  + startGame() : void
+  + printResult() : void
+}
+
+'兩球隊資訊
+class Team {
+  - name : String
+  - players : List<Player>
+  + Team(name: String)
+  + addPlayer(p: Player) : void
+  + getPlayers() : List<Player>
+  + getTeamBattingAverage() : double
+  + getName() : String
+  + toString() : String
+}
+
+'球員資訊
+class Player {
+  - name : String
+  - position : String
+  - hits : int
+  - atBat : int
+  + Player(name: String, position: String)
+  + recordAtBat(isHit: boolean) : void
+  + getBattingAverage() : double
+  + getName() : String
+  + getPosition() : String
+  + getHits() : int
+  + getatBat() : int
+  + toString() : String
+}
+
+'每次打擊記錄
+class AtBatRecord {
+  - player : Player
+  - isHit : boolean
+  + AtBatRecord(player: Player, isHit: boolean)
+  + isHit() : boolean
+  + getPlayer() : Player
+}
+
+'每局資訊
+class Inning {
+  - inningNumber : int
+  - topHalfatBat : List<AtBatRecord>
+  - bottomHalfatBat : List<AtBatRecord>
+  + Inning(inningNumber: int)
+  + addTopHalfAtBat(record: AtBatRecord) : void
+  + addBottomHalfAtBat(record: AtBatRecord) : void
+  + getInningNumber() : int
+  + getTopHalfatBat() : List<AtBatRecord>
+  + getBottomHalfatBat() : List<AtBatRecord>
+}
+
+'程式進入點，觸發完整比賽流程
+class BaseballGame {
+  + main(args: String[]) : void
+}
+
+'組合關係
+Team "1" *-- "*" Player : players
+Inning "1" *-- "*" AtBatRecord
+Game "1" *-- "*" Inning : innings
+
+'參考關係
+Game --> Team : teamA
+Game --> Team : teamB
+
+'依賴關係
+BaseballGame ..> Game
+@enduml

@@ -1,0 +1,12 @@
+@startuml
+class StringTokenizer
+
+class BossStringTokenizer {
+  - tokenizer: StringTokenizer
+  + nextToken(): String
+  + hasMoreTokens(): boolean
+  + getAllTokens(): String[]
+}
+
+BossStringTokenizer o--> StringTokenizer : delegates to
+@enduml
