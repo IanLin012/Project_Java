@@ -1,6 +1,6 @@
 package GUIChessGame;
 
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 
 /**
  * Start game
