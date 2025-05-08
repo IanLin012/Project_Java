@@ -6,6 +6,9 @@ import ChineseChess.Interface.Player;
 
 import java.util.*;
 
+/**
+ * Standard chess game flow
+ */
 public class StandardChessGame extends AbstractGame {
     private Chess[][] board;
     private List<Chess> pieces;
@@ -19,6 +22,7 @@ public class StandardChessGame extends AbstractGame {
         setup();
     }
 
+    // Initial chess board & chess
     private void setup() {
         String[][] layout = {
                 {"車","馬","象","士","將","士","象","馬","車"},
@@ -54,14 +58,13 @@ public class StandardChessGame extends AbstractGame {
     @Override
     public boolean move(String from, String to) {
         int[] f = convert(from), t = convert(to);
-        if (f[0]<0||t[0]<0) return false;
+        if (f[0]<0 || t[0]<0) return false;
         Chess sel = board[f[0]][f[1]];
         Chess tgt = board[t[0]][t[1]];
         if (sel == null || !sel.getSide().equals(getCurrentSide())) return false;
         StandardChess xp = (StandardChess) sel;
         if (!xp.canMove(f, t, board)) return false;
         if (tgt != null && tgt.getSide().equals(sel.getSide())) return false;
-        // move
         board[t[0]][t[1]] = sel;
         board[f[0]][f[1]] = null;
         sel.setLoc(to);
@@ -95,8 +98,6 @@ public class StandardChessGame extends AbstractGame {
         if (!blackGeneral) return p1.getName() + "（紅方）勝利";
         return "";
     }
-
-    public boolean gameOverWithoutLog() { return gameOver(); }
 
     public String getCurrentSide() { return p1Turn? p1.getSide():p2.getSide(); }
 

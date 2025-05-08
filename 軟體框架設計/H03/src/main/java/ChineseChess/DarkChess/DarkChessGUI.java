@@ -5,6 +5,9 @@ import ChineseChess.Interface.Player;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Dark chess game GUI
+ */
 public class DarkChessGUI extends JFrame {
     private DarkChessGame game;
     private JButton[][] boardButtons;
@@ -12,30 +15,39 @@ public class DarkChessGUI extends JFrame {
     private final int rows = 4, cols = 8;
     private String selectedFrom = null;
 
+    // Picture location
     private static final String IMG_PATH_BACK = "/images/back.png";
     private static final String IMG_PATH_PIECE = "/images/";
 
     public DarkChessGUI() {
         game = new DarkChessGame();
-        game.setPlayers(new Player("１號玩家", ""), new Player("２號玩家", ""));
+        //Initial unassigned player side
+        game.setPlayers(
+            new Player("玩家1", ""), new Player("玩家2", ""));
         initUI();
     }
 
     private void initUI() {
         setTitle("台灣暗棋遊戲");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1024, 1024);
+        setSize(800, 800);
         setLayout(new BorderLayout());
 
         JPanel boardPanel = new JPanel(new GridLayout(rows + 1, cols + 1));
         boardButtons = new JButton[rows][cols];
 
         boardPanel.add(new JLabel(" "));
+        // Insert 1~8 label
         for (int j = 0; j < cols; j++) {
-            boardPanel.add(new JLabel(String.valueOf(j + 1), SwingConstants.CENTER));
+            boardPanel.add(
+                new JLabel(String.valueOf(j + 1), SwingConstants.CENTER)
+            );
         }
+        // Insert A~D label & chess board button
         for (int i = 0; i < rows; i++) {
-            boardPanel.add(new JLabel(String.valueOf((char)('A'+i)), SwingConstants.CENTER));
+            boardPanel.add(
+                new JLabel(String.valueOf((char)('A'+i)), SwingConstants.CENTER)
+            );
             for (int j = 0; j < cols; j++) {
                 JButton btn = new JButton();
                 btn.setPreferredSize(new Dimension(64,64));
@@ -58,6 +70,7 @@ public class DarkChessGUI extends JFrame {
         refreshBoard();
     }
 
+    // Implement click event
     private void handleCellClick(int row, int col) {
         String pos = "" + (char)('A'+row) + (col+1);
         DarkChess[][] board = game.getBoard();
@@ -70,29 +83,38 @@ public class DarkChessGUI extends JFrame {
             }
             if (!piece.isFlipped()) {
                 piece.flip();
-                appendMessage(game.getCurrentPlayerName() + " 在 " + pos + " 翻開了 " + piece.getName());
+                appendMessage(game.getCurrentPlayerName() +
+                    " 在 " + pos + " 翻開了 " + piece.getName());
                 if (game.getPlayer1().getSide().isEmpty()) {
                     game.getPlayer1().setSide(piece.getSide());
-                    game.getPlayer2().setSide(piece.getSide().equals("Red")?"Black":"Red");
-                    appendMessage("玩家1 為 " + (game.getPlayer1().getSide().equals("Red")?"紅方":"黑方"));
-                    appendMessage("玩家2 為 " + (game.getPlayer2().getSide().equals("Red")?"紅方":"黑方"));
+                    game.getPlayer2().setSide(
+                        piece.getSide().equals("Red") ? "Black" : "Red");
+                    appendMessage("玩家1 為 " +
+                        (game.getPlayer1().getSide().equals("Red") ? "紅方" : "黑方"));
+                    appendMessage("玩家2 為 " +
+                        (game.getPlayer2().getSide().equals("Red") ? "紅方" : "黑方"));
                 }
                 game.switchTurn();
                 refreshBoard();
                 checkGameOver();
                 return;
             }
+            // Chess selection validation
             if (!piece.getSide().equals(game.getCurrentPlayerSide())) {
-                appendMessage("這是對手的棋子！你是 " + (game.getCurrentPlayerSide().equals("Red")?"紅方":"黑方"));
+                appendMessage("現在是 " +
+                    (game.getCurrentPlayerSide().equals("Red") ? "紅方" : "黑方") +
+                    " 的回合！");
                 return;
             }
             selectedFrom = pos;
             appendMessage("選擇來源位置：" + pos + "（" + piece.getName() + "）");
-            boardButtons[row][col].setBorder(BorderFactory.createLineBorder(Color.YELLOW,3));
-        } else {
+            boardButtons[row][col].setBorder(
+                    BorderFactory.createLineBorder(Color.YELLOW,3));
+        } else { // Execute movement
             String from = selectedFrom, to = pos;
             int srcRow = from.charAt(0)-'A', srcCol = Integer.parseInt(from.substring(1))-1;
-            boardButtons[srcRow][srcCol].setBorder(UIManager.getBorder("Button.border"));
+            boardButtons[srcRow][srcCol].setBorder(
+                    UIManager.getBorder("Button.border"));
             boolean result = game.move(from, to);
             appendMessage(game.getLogMessages());
             if (result) game.switchTurn();
@@ -121,6 +143,7 @@ public class DarkChessGUI extends JFrame {
         }
     }
 
+    // Append game message in message area
     private void appendMessage(String msg) {
         messageArea.append(msg + "\n");
         messageArea.setCaretPosition(messageArea.getDocument().getLength());
@@ -134,10 +157,5 @@ public class DarkChessGUI extends JFrame {
                     b.setEnabled(false);
         }
     }
-    /*
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new DarkChessGUI().setVisible(true));
-    }
-    */
 }
 

@@ -2,100 +2,128 @@ package ChineseChess.StandardChess;
 
 import ChineseChess.Interface.Chess;
 
+/**
+ * Standard chess rule
+ */
 public class StandardChess extends Chess {
     public StandardChess(String name, String side, String loc) {
         super(name, side, loc);
     }
 
+    // Chess move rule
     public boolean canMove(int[] from, int[] to, Chess[][] board) {
+        //Up & down movement
         int dr = to[0] - from[0];
+        //Left & right movement
         int dc = to[1] - from[1];
         Chess target = board[to[0]][to[1]];
         String n = getName();
-        // 車 (Rook)
+
+        // Rook
         if (n.equals("車") || n.equals("俥")) {
+            //Straight movement
             if (dr != 0 && dc != 0) return false;
+            //Obstacle on route
             if (countBetween(from, to, board) != 0) return false;
             return true;
         }
-        // 馬 (Horse)
+
+        // Horse
         if (n.equals("馬") || n.equals("傌")) {
+            //日字
             if (Math.abs(dr)==2 && Math.abs(dc)==1) {
-                // 馬腿
                 int br = from[0] + dr/2;
                 int bc = from[1];
+                //絆馬腳
                 return board[br][bc] == null;
             } else if (Math.abs(dr)==1 && Math.abs(dc)==2) {
                 int br = from[0];
                 int bc = from[1] + dc/2;
+                //絆馬腳
                 return board[br][bc] == null;
             }
             return false;
         }
-        // 相/象 (Elephant)
+
+        // Elephant
         if (n.equals("象") || n.equals("相")) {
-            // 田字走兩格
+            //田字
             if (Math.abs(dr)==2 && Math.abs(dc)==2) {
-                // 相眼
                 int br = from[0] + dr/2;
                 int bc = from[1] + dc/2;
+                //塞象眼
                 if (board[br][bc] != null) return false;
-                // 不可過河
+                // After river invalid
                 if (getSide().equals("Red") && to[0] < 5) return false;
                 if (getSide().equals("Black") && to[0] > 4) return false;
                 return true;
             }
             return false;
         }
-        // 士 (Advisor)
+
+        // Advisor
         if (n.equals("士") || n.equals("仕")) {
+            //Diagonal 1 block movement
             if (Math.abs(dr)==1 && Math.abs(dc)==1) {
                 int r = to[0], c = to[1];
-                if (getSide().equals("Red") && r >= 7 && c >= 3 && c <= 5) return true;
-                if (getSide().equals("Black") && r <= 2 && c >= 3 && c <= 5) return true;
+                //Inside 3×3 grid
+                if (getSide().equals("Red") && r >= 7 && c >= 3 && c <= 5)
+                    return true;
+                if (getSide().equals("Black") && r <= 2 && c >= 3 && c <= 5)
+                    return true;
             }
             return false;
         }
-        // 帥/將 (General)
+
+        // General
         if (n.equals("帥") || n.equals("將")) {
-            // 一格直走或橫走
+            //Straight 1 block movement
             if (Math.abs(dr)+Math.abs(dc)==1) {
                 int r = to[0], c = to[1];
-                if (getSide().equals("Red") && r >= 7 && c >= 3 && c <= 5) return true;
-                if (getSide().equals("Black") && r <= 2 && c >= 3 && c <= 5) return true;
+                //Inside 3×3 grid
+                if (getSide().equals("Red") && r >= 7 && c >= 3 && c <= 5)
+                    return true;
+                if (getSide().equals("Black") && r <= 2 && c >= 3 && c <= 5)
+                    return true;
             }
-            // 飛將
+            //Fly General
             if (dc==0) {
                 Chess other = board[to[0]][to[1]];
-                if (other != null && (other.getName().equals("帥")||other.getName().equals("將"))) {
+                if (other != null &&
+                    (other.getName().equals("帥")||other.getName().equals("將"))) {
                     if (countBetween(from, to, board)==0) return true;
                 }
             }
             return false;
         }
-        // 兵/卒 (Pawn)
+
+        // Pawn
         if (n.equals("兵") || n.equals("卒")) {
+            //Straight 1 block movement
             int dir = getSide().equals("Red") ? -1 : 1;
-            // 直進一格
             if (dr==dir && dc==0) return true;
-            // 過河後可平走
-            boolean crossed = getSide().equals("Red") ? from[0] <= 4 : from[0] >= 5;
+            //After river
+            boolean crossed = getSide().equals("Red") ?
+                    from[0] <= 4 : from[0] >= 5;
+            //Horizontal 1 block movement
             if (crossed && dr==0 && Math.abs(dc)==1) return true;
             return false;
         }
-        // 炮 (Cannon)
+
+        // Cannon
         if (n.equals("炮") || n.equals("砲")) {
+            //Straight movement
             if (dr!=0 && dc!=0) return false;
             int between = countBetween(from, to, board);
-            if (target == null) {
-                return between == 0;
-            } else {
-                return between == 1;
-            }
+            //Obstacle on route
+            if (target == null) return between == 0;
+            //Capture
+            else return between == 1;
         }
         return false;
     }
 
+    // Movement(Rook, Cannon) & capture(Cannon) validation
     private int countBetween(int[] from, int[] to, Chess[][] board) {
         int count = 0;
         if (from[0]==to[0]) {

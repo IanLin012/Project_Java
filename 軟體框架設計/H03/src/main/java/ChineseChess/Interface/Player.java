@@ -1,5 +1,8 @@
 package ChineseChess.Interface;
 
+/**
+ * Player information
+ */
 public class Player {
     private String name;
     private String side; // Red/Black

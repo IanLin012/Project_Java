@@ -1,5 +1,8 @@
 package ChineseChess.Interface;
 
+/**
+ * Chess information
+ */
 public class Chess {
     protected String name;
     protected String side;

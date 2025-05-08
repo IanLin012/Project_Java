@@ -6,7 +6,7 @@ import ChineseChess.Interface.Player;
 import java.util.*;
 
 /**
- * Game flow
+ * Dark chess game flow
  */
 public class DarkChessGame extends AbstractGame {
     protected DarkChess[][] board;
@@ -18,9 +18,7 @@ public class DarkChessGame extends AbstractGame {
     //Game message
     private StringBuilder logMessages = new StringBuilder();
 
-    private void log(String msg) {
-        logMessages.append(msg).append("\n");
-    }
+    private void log(String msg) { logMessages.append(msg).append("\n"); }
 
     public DarkChessGame() {
         board = new DarkChess[rows][cols];
@@ -58,14 +56,18 @@ public class DarkChessGame extends AbstractGame {
         Collections.shuffle(positions);
         for (String name : redNames) {
             String pos = positions.remove(0);
-            DarkChess chess = new DarkChess(name, "Red", pos, weightMap.get(name));
+            DarkChess chess = new DarkChess(
+                name, "Red", pos, weightMap.get(name)
+            );
             chessPieces.add(chess);
             int[] rc = convertPosToRC(pos);
             board[rc[0]][rc[1]] = chess;
         }
         for (String name : blackNames) {
             String pos = positions.remove(0);
-            DarkChess chess = new DarkChess(name, "Black", pos, weightMap.get(name));
+            DarkChess chess = new DarkChess(
+                name, "Black", pos, weightMap.get(name)
+            );
             chessPieces.add(chess);
             int[] rc = convertPosToRC(pos);
             board[rc[0]][rc[1]] = chess;
@@ -221,26 +223,18 @@ public class DarkChessGame extends AbstractGame {
     }
 
     // Player turn judgement
-    public void switchTurn() {
-        isPlayer1Turn = !isPlayer1Turn;
-    }
+    public void switchTurn() { isPlayer1Turn = !isPlayer1Turn; }
 
     // Getter for GUI
-    public DarkChess[][] getBoard() {
-        return board;
-    }
+    public DarkChess[][] getBoard() { return board; }
     public String getCurrentPlayerName() {
         return isPlayer1Turn ? player1.getName() : player2.getName();
     }
     public String getCurrentPlayerSide() {
         return isPlayer1Turn ? player1.getSide() : player2.getSide();
     }
-    public Player getPlayer1() {
-        return player1;
-    }
-    public Player getPlayer2() {
-        return player2;
-    }
+    public Player getPlayer1() { return player1; }
+    public Player getPlayer2() { return player2; }
 
     // Get winner information
     public String getWinner() {

@@ -6,6 +6,9 @@ import ChineseChess.Interface.Player;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Standard chess game GUI
+ */
 public class StandardChessGUI extends JFrame {
     private StandardChessGame game;
     private JButton[][] buttons;
@@ -19,47 +22,74 @@ public class StandardChessGUI extends JFrame {
         game.setPlayers(new Player("玩家1", "Red"), new Player("玩家2", "Black"));
         initUI();
     }
-
     private void initUI() {
         setTitle("標準象棋");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(800, 900);
+        setSize(800, 800);
         setLayout(new BorderLayout());
 
-        JPanel boardPanel = new JPanel(new GridLayout(rows+1, cols+1));
+        JPanel boardPanel = new JPanel(new GridLayout(rows + 2, cols + 1)); // +2: 因為插入了一行楚河漢界
         buttons = new JButton[rows][cols];
 
+        // Insert 1~9 label
         boardPanel.add(new JLabel());
-        for (int j=1; j<=cols; j++) boardPanel.add(new JLabel(String.valueOf(j), SwingConstants.CENTER));
-        for (int i=0; i<rows; i++) {
-            boardPanel.add(new JLabel(String.valueOf((char)('A'+i)), SwingConstants.CENTER));
-            for (int j=0; j<cols; j++) {
+        for (int j = 1; j <= cols; j++) {
+            boardPanel.add(new JLabel(String.valueOf(j), SwingConstants.CENTER));
+        }
+
+        // Insert chess board button & (楚河 漢界)
+        for (int i = 0; i < rows; i++) {
+            //Insert (楚河 漢界) between E & F
+            if (i == 5) { //Complete E row
+                boardPanel.add(new JLabel()); //Left side blank row
+                for (int j = 0; j < cols; j++) {
+                    if (j == 0) {
+                        JLabel chu = new JLabel("楚河", SwingConstants.LEFT);
+                        chu.setFont(new Font("Serif", Font.BOLD, 30));
+                        chu.setForeground(Color.BLACK);
+                        boardPanel.add(chu);
+                    } else if (j == cols - 1) {
+                        JLabel han = new JLabel("漢界", SwingConstants.RIGHT);
+                        han.setFont(new Font("Serif", Font.BOLD, 30));
+                        han.setForeground(Color.RED);
+                        boardPanel.add(han);
+                    } else {
+                        boardPanel.add(new JLabel()); //Blank col
+                    }
+                }
+            }
+
+            // Insert A~J label
+            boardPanel.add(new JLabel(String.valueOf((char) ('A' + i)), SwingConstants.CENTER));
+            for (int j = 0; j < cols; j++) {
                 JButton btn = new JButton();
-                btn.setPreferredSize(new Dimension(60,60));
-                final int r=i, c=j;
+                btn.setPreferredSize(new Dimension(60, 60));
+                final int r = i, c = j;
                 btn.addActionListener(e -> onClick(r, c));
                 buttons[i][j] = btn;
                 boardPanel.add(btn);
             }
         }
+
         add(boardPanel, BorderLayout.CENTER);
 
-        statusBar = new JLabel("" , SwingConstants.CENTER);
+        statusBar = new JLabel("", SwingConstants.CENTER);
         statusBar.setPreferredSize(new Dimension(getWidth(), 30));
         add(statusBar, BorderLayout.SOUTH);
 
         refreshBoard();
     }
 
+
     private void onClick(int r, int c) {
         String pos = "" + (char)('A'+r) + (c+1);
         if (selected == null) {
             if (game.getBoard()[r][c] == null) {
-                statusBar.setText("無棋子");
+                statusBar.setText("該位置沒有棋子");
                 return;
             }
             if (!game.getBoard()[r][c].getSide().equals(game.getCurrentSide())) {
-                statusBar.setText("非輪到方");
+                statusBar.setText("現在是" + (game.getCurrentSide().equals("Red") ? "紅方" : "黑方") + "的回合");
                 return;
             }
             selected = pos;
@@ -73,7 +103,7 @@ public class StandardChessGUI extends JFrame {
                 game.switchTurn();
                 statusBar.setText("移動成功: " + selected + "→" + pos);
             } else {
-                statusBar.setText("非法走法: " + selected + "→" + pos);
+                statusBar.setText("移動失敗: " + selected + "→" + pos);
             }
             selected = null;
             refreshBoard();
@@ -104,10 +134,4 @@ public class StandardChessGUI extends JFrame {
             for (JButton btn : row)
                 btn.setEnabled(false);
     }
-
-    /*
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new StandardChessGUI().setVisible(true));
-    }
-    */
 }

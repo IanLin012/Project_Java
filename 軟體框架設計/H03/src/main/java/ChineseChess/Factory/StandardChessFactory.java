@@ -1,17 +1,13 @@
 package ChineseChess.Factory;
 
-import ChineseChess.Interface.*;
 import ChineseChess.StandardChess.StandardChessGUI;
-import ChineseChess.StandardChess.StandardChessGame;
 
 import javax.swing.*;
 
+/**
+ * Implement standard chess game factory
+ */
 public class StandardChessFactory implements ChessFactory {
-    @Override
-    public AbstractGame createGame() {
-        return new StandardChessGame();
-    }
-
     @Override
     public JFrame createGUI() {
         return new StandardChessGUI();

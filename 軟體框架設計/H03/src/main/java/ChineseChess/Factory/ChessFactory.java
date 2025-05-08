@@ -1,10 +1,10 @@
 package ChineseChess.Factory;
 
-import ChineseChess.Interface.AbstractGame;
-
 import javax.swing.*;
 
+/**
+ * Abstract chess game factory
+ */
 public interface ChessFactory {
-    AbstractGame createGame();
     JFrame createGUI();
 }
