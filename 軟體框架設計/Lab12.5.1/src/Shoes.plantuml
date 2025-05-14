@@ -1,0 +1,53 @@
+@startuml
+skinparam style strictuml
+
+interface ShoesBody
+interface ShoesStrap
+interface ShoesBottom
+
+interface ShoesFactory {
+    +createBody(): ShoesBody
+    +createStrap(): ShoesStrap
+    +createBottom(): ShoesBottom
+}
+
+class SportShoesFactory
+class LeisureShoesFactory
+class LeatherShoesFactory
+
+ShoesFactory <|.. SportShoesFactory
+ShoesFactory <|.. LeisureShoesFactory
+ShoesFactory <|.. LeatherShoesFactory
+
+class SportShoesBody
+class SportShoesStrap
+class SportShoesBottom
+
+ShoesBody <|.. SportShoesBody
+ShoesStrap <|.. SportShoesStrap
+ShoesBottom <|.. SportShoesBottom
+
+class LeisureShoesBody
+class LeisureShoesStrap
+class LeisureShoesBottom
+
+ShoesBody <|.. LeisureShoesBody
+ShoesStrap <|.. LeisureShoesStrap
+ShoesBottom <|.. LeisureShoesBottom
+
+class LeatherShoesBody
+class LeatherShoesStrap
+class LeatherShoesBottom
+
+ShoesBody <|.. LeatherShoesBody
+ShoesStrap <|.. LeatherShoesStrap
+ShoesBottom <|.. LeatherShoesBottom
+
+class Shoes {
+    -body: ShoesBody
+    -strap: ShoesStrap
+    -bottom: ShoesBottom
+    +makeShoes(factory: ShoesFactory)
+}
+
+@enduml

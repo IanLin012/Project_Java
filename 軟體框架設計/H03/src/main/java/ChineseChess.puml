@@ -1,0 +1,126 @@
+@startuml
+skinparam linetype ortho
+top to bottom direction
+
+package "Interface" {
+abstract class AbstractGame {
+  +setPlayers(p1, p2)
+  +move(from, to): boolean
+  +gameOver(): boolean
+}
+class Player {
+  -name: String
+  -side: String
+  +getName(): String
+  +getSide(): String
+  +setSide(side)
+}
+class Chess {
+  -name: String
+  -side: String
+  -loc: String
+  +getName(): String
+  +getSide(): String
+  +getLoc(): String
+  +setLoc(loc)
+  +toString(): String
+}
+}
+
+package "StandardChess" {
+class StandardChess {
+  +canMove(from, to, board): boolean
+}
+class StandardChessGame {
+  -board: Chess[][]
+  -pieces: List
+  -p1: Player
+  -p2: Player
+  -p1Turn: boolean
+  +move(from, to): boolean
+  +getBoard(): Chess[][]
+  +getCurrentSide(): String
+  +getWinner(): String
+  +switchTurn()
+}
+class StandardChessGUI {
+  -game: StandardChessGame
+  -buttons: JButton[][]
+  -statusBar: JLabel
+  +refreshBoard()
+  +onClick(row, col)
+}
+}
+
+package "DarkChess" {
+class DarkChess {
+  -weight: int
+  -flipped: boolean
+  +flip()
+  +isFlipped(): boolean
+  +getWeight(): int
+  +canCapture(target): boolean
+}
+class DarkChessGame {
+  -board: DarkChess[][]
+  -chessPieces: List
+  -player1: Player
+  -player2: Player
+  -isPlayer1Turn: boolean
+  +move(from, to): boolean
+  +getBoard(): DarkChess[][]
+  +getLogMessages(): String
+  +getWinner(): String
+  +switchTurn()
+}
+class DarkChessGUI {
+  -game: DarkChessGame
+  -boardButtons: JButton[][]
+  -messageArea: JTextArea
+  -selectedFrom: String
+  +refreshBoard()
+  +handleCellClick(row, col)
+}
+}
+
+package "Factory" {
+interface ChessFactory {
+  +createGame(): AbstractGame
+  +createGUI(): JFrame
+}
+class StandardChessFactory {
+  +createGame(): AbstractGame
+  +createGUI(): JFrame
+}
+class DarkChessFactory {
+  +createGame(): AbstractGame
+  +createGUI(): JFrame
+}
+}
+
+package "Entry" {
+class GameManager {
+  +launchGUI(factory)
+}
+class Main {
+  +main(args)
+}
+}
+
+StandardChess -|> Chess
+DarkChess -|> Chess
+StandardChessGame -|> AbstractGame
+DarkChessGame -|> AbstractGame
+StandardChessGUI --> StandardChessGame
+DarkChessGUI --> DarkChessGame
+StandardChessFactory ..|> ChessFactory
+DarkChessFactory ..|> ChessFactory
+StandardChessFactory --> StandardChessGame
+StandardChessFactory --> StandardChessGUI
+DarkChessFactory --> DarkChessGame
+DarkChessFactory --> DarkChessGUI
+GameManager --> StandardChessFactory
+GameManager --> DarkChessFactory
+Main --> GameManager
+
+@enduml

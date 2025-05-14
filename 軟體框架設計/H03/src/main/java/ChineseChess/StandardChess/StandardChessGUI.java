@@ -80,7 +80,6 @@ public class StandardChessGUI extends JFrame {
         refreshBoard();
     }
 
-
     private void onClick(int r, int c) {
         String pos = "" + (char)('A'+r) + (c+1);
         if (selected == null) {

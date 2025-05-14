@@ -18,6 +18,4 @@ public class Chess {
     public String getSide() { return side; }
     public String getLoc() { return loc; }
     public void setLoc(String loc) { this.loc = loc; }
-
-    public String toString() { return name; }
 }

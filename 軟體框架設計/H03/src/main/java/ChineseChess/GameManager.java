@@ -40,4 +40,3 @@ public class GameManager extends JFrame {
         gui.setVisible(true);
     }
 }
-
