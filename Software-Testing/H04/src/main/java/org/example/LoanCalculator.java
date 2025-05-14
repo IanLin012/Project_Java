@@ -3,7 +3,8 @@ package org.example;
 public class LoanCalculator {
     private LoanCalculator(){} //防止實例化
 
-    public static double calculateInterestRate(int loanYears, double loanAmount, boolean isYouth, boolean isMarried) {
+    public static double calculateInterestRate(
+            int loanYears, double loanAmount, boolean isYouth, boolean isMarried) {
         double baseRate = 5.0; //基礎利率
         double discount = 0.0;
 
