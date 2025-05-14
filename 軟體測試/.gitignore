@@ -1,5 +1,5 @@
 .idea/
 out/
 target/
-sw-testing24/
 *.iml
+Test/

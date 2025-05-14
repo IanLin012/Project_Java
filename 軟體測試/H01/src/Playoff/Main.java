@@ -23,7 +23,7 @@ public final class Main {
         int exitStatus = 0;
         final String csvFile = args.length > 0
                 ? args[0]
-                : "C:\\Users\\drlin\\Project_Java\\軟體測試\\HW01\\mlb_standings.csv";
+                : "C:\\Users\\drlin\\Project_Java\\軟體測試\\H01\\mlb_standings.csv";
 
         final List<Team> teams = TeamLoader.loadTeams(csvFile);
         if (teams.isEmpty()) {
